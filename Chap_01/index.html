@@ -10,16 +10,19 @@
         <div id="app">
             <h1 v-text="deckName"></h1>
 
-            <div class="user-input">
-                Type something: <input type="text" v-model="userInput">
+            <!-- add click handler with statement value to div -->
+            <!-- @ is shorthand for v-on: -->
+            <div @click="flipped = !flipped" class="card">
+                <h2 v-text="flipped ? '' : cards[index].front"></h2>
+                <div v-html="flipped ? cards[index].back : '' "></div>
             </div>
 
-            <div class="card">
-                <!-- <h2 v-text="flipped ? '' : cards[0].front"></h2>
-                <div v-html="flipped ? cards[0].back : '' "></div> -->
-                <h2 v-text="userInput == 'flip' ? '' : cards[0].front"></h2>
-                <div v-html="userInput == 'flip' ? cards[0].back : '' "></div>
+            <div class="navigation">
+            <!-- @click="move" encapsulates logic in method called move -->
+            <button @click="move(-1)" type="button"> &#8592; </button>
+            <button @click="move(1)" type="button"> &#8594; </button>
             </div>
+            
             <a :href="readMoreUrl">Read more</a>
             <!-- :href is a shorthand syntax version of v-bind:href=...-->
         </div>
@@ -33,18 +36,26 @@
                 //data is an function our app will work with
                 //returns an object 
                 data(){
-                    return{
+                    return {
                         deckName: 'Vue.js Fundamentals',
                         cards: cards, // this could be shortcutted to just say "cards", since it's common to have the same word on both sides of the ":"
+                        index: 0,
                         flipped: false,
-                        readMoreUrl: 'https://vuejs.org/guide/introduction.html',
-                        userInput: 'defualt'
+                        readMoreUrl: 'https://vuejs.org/guide/introduction.html'
                     };
+                },
+                methods: {
+                    move(change) {
+                        if (this.cards[this.index + change]){
+                        this.index += change;
+                        this.flipped = false;
+                    }
+                }
+
                 }
             }
             //save reference to created app in const called app
             const app = Vue.createApp(FlashCardApp).mount('#app');
         </script>
-
     </body>
 </html>
