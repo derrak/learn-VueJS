@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <title>Flash Card App</title>
+    </head>
+    <body>
+
+        <div id="app">
+            <h1 v-text="deckName"></h1>
+
+            <div class="card">
+                <h2 v-text="flipped ? '' : cards[0].front"></h2>
+                <div v-html="flipped ? cards[0].back : '' "></div>
+            </div>
+            <a v-bind:href="">Read more</a>
+        </div>
+
+        <script src="data.js"></script>
+        <script src="https://unpkg.com/vue@3.0.7/dist/vue.global.js"></script>
+        <script>
+            //object that describes app by representing options that will
+            //be passed to a method that will create the app
+            const FlashCardApp = { 
+                //data is an function our app will work with
+                //returns an object 
+                data(){
+                    return{
+                        deckName: 'Vue.js Fundamentals',
+                        cards: cards, // this could be shortcutted to just say "cards", since it's common to have the same word on both sides of the ":"
+                        flipped: false,
+                        readMoreUrl: 
+                    };
+                }
+            }
+            //save reference to created app in const called app
+            const app = Vue.createApp(FlashCardApp).mount('#app');
+        </script>
+
+    </body>
+</html>
